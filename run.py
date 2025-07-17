@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from utils import load_patterns, detect_sqli, log_attack
-
+  
 app = Flask(__name__)
 patterns = load_patterns()  # Load once when server starts
 
