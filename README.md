@@ -9,7 +9,7 @@
 ## 🔒 What is SQLi-Detect?
 
 **SQLi-Detect** is a powerful, yet lightweight SQL Injection Detection tool built in Python. It helps security professionals, developers, and students detect and log suspicious inputs that may indicate SQL injection attempts.
-
+ 
 Using carefully crafted regex patterns, this tool can:
 
 - Identify common and advanced SQLi payloads
