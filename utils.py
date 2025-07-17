@@ -1,7 +1,7 @@
 import os
 import re
 from datetime import datetime
-
+  
 # Define the log file path (works on Windows/Linux/Mac)
 LOG_FILE = os.path.join("logs", "sqli_logs.txt")
 
