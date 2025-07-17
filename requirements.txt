@@ -2,3 +2,4 @@ flask
 fpdf
 colorama
 requests
+ 
