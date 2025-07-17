@@ -1,7 +1,7 @@
 import os
 from fpdf import FPDF
 from datetime import datetime
-
+  
 LOG_FILE = os.path.join("logs", "sqli_logs.txt")
 REPORTS_DIR = "reports"
 
