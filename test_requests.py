@@ -1,5 +1,5 @@
 import requests
-
+  
 URL = "http://localhost:5000/test"
 
 # List of test inputs: safe and malicious
