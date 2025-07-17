@@ -8,3 +8,4 @@
 (?i)EXEC\s+\w+
 (?i)WAITFOR\s+DELAY
 (?i)SLEEP\(\d+\)
+  
