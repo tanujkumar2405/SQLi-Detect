@@ -1,0 +1,10 @@
+(?i)(%27|'|--|%23|#)
+(?i)(\bOR\b|\bAND\b)\s+\d+=\d+
+(?i)UNION\s+SELECT
+(?i)SELECT.+FROM
+(?i)INSERT\s+INTO
+(?i)DROP\s+TABLE
+(?i)UPDATE\s+\w+\s+SET
+(?i)EXEC\s+\w+
+(?i)WAITFOR\s+DELAY
+(?i)SLEEP\(\d+\)

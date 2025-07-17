@@ -1,0 +1,4 @@
+flask
+fpdf
+colorama
+requests
