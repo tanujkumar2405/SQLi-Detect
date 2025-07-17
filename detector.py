@@ -5,7 +5,7 @@ from colorama import Fore, Style
 
 # Initialize colorama (important for Windows)
 colorama.init(autoreset=True)
-
+ 
 patterns = load_patterns()
 
 def main():
