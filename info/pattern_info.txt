@@ -1,0 +1,51 @@
+# Detects common SQL injection symbols:
+# It is a single non-capturing group that checks for:
+# (?i) → Case-insensitive
+# - %27 = URL encoded single quote (')
+# - '-- = Comment to ignore the rest of the SQL query
+# - %23 or # = URL encoded or direct comment marker
+# # (SQL comment)
+(?i)(%27|'|--|%23|#)
+
+# Detects use of OR/AND with always-true logic like: OR 1=1 or AND 1=1
+# This is a classic SQL injection trick to bypass authentication
+#\bOR\b / \bAND\b → Detects "OR" or "AND" as full words
+#\s+ → Requires space after OR/AND
+#\d+=\d+ → Looks for always-true condition (e.g., 1=1)
+(?i)(\bOR\b|\bAND\b)\s+\d+=\d+
+
+# Detects use of UNION SELECT which is often used to extract data from another table
+# E.g., ' UNION SELECT username, password FROM users
+#UNION SELECT → Used to extract data from another table
+(?i)UNION\s+SELECT
+
+# Detects SELECT queries with a common typo (SELECT ... FORM instead of FROM)
+# This may catch obfuscated or malformed injections
+#SELECT.+FORM → Catches SELECT queries with typo "FORM" instead of "FROM"
+(?i)SELECT.+FORM
+
+# Detects INSERT INTO statements, used to insert malicious or unauthorized data
+#INSERT INTO → Used to add data to a table
+(?i)INSERT\s+INTO
+
+# Detects DROP TABLE statements, which can delete database tables
+# Very dangerous if executed
+#DROP TABLE → Deletes a table
+(?i)DROP\s+TABLE
+
+# Detects UPDATE queries that try to change values in a table (like passwords or access levels)
+#UPDATE <table> SET → Changes data in the table
+(?i)UPDATE\s+\w+\s+SET
+
+# Detects EXEC commands that can run stored procedures or system commands (e.g., xp_cmdshell)
+#EXEC command → Executes stored procedures or commands
+(?i)EXEC\s+\w+
+
+# Detects WAITFOR DELAY used in time-based blind SQL injections
+# E.g., WAITFOR DELAY '00:00:05'
+#WAITFOR DELAY '00:00:05' → Causes time delay
+(?i)WAITFOR\s+DELAY
+
+# Detects use of SLEEP(seconds) in SQL, another form of time delay attack
+#SLEEP(5) → Pauses SQL execution for 5 seconds
+(?i)SLEEP\(\d+\)

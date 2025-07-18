@@ -1,0 +1,93 @@
+# IMPORTING NECESSARY MODULES
+
+from flask import Flask, request, jsonify
+# 'flask' is a micro web framework used to build web apps/APIs
+# 'Flask' creates the app
+# 'request' is used to handle incoming request data (query or form)
+# 'jsonify' is used to return JSON response from the API
+
+from utils import load_patterns, detect_sqli, log_attack
+# 'from ... import ...' is a Python import statement
+# This imports custom functions from 'utils.py' file:
+# - load_patterns(): loads SQLi detection patterns
+# - detect_sqli(): checks if input matches any SQLi pattern
+# - log_attack(): saves details of detected attacks
+
+# CREATE A FLASK APPLICATION
+
+app = Flask(__name__)
+# 'Flask(__name__)' creates the Flask app instance
+# '__name__' is a special variable representing the current file name
+# Flask uses it to find resources and templates
+
+patterns = load_patterns()  
+# Calls 'load_patterns' once when server starts
+# Stores regex patterns in memory for reuse
+
+
+# DEFINING HOMEPAGE ROUTE
+
+@app.route('/')
+# '@app.route' is a decorator that defines a URL route ("/" means homepage)
+
+def home():
+    return "🔒 Welcome to the SQL Injection Detection API"
+    # When user visits "/", show this welcome message
+
+
+# DEFINING SCAN ENDPOINT
+
+@app.route('/scan', methods=['GET', 'POST'])
+# This defines the '/scan' route
+# It accepts both GET and POST requests
+
+def scan():
+    # This function handles scanning input for SQL injection
+
+    # GET: URL query like /scan?input=value
+    # POST: form data submitted via form or request body
+    
+    user_input = request.args.get('input') or request.form.get('input') or ''
+    # request.args.get(): fetches input from GET request (URL query)
+    # request.form.get(): fetches input from POST form data
+    # 'or': if GET input is empty, use POST; if both empty, use ''
+    
+    matched_pattern = detect_sqli(user_input, patterns)
+    # Checks if input matches any known SQL injection pattern
+
+    if matched_pattern:
+        # If a pattern is detected in the input (i.e., possible SQLi)
+        
+        ip = request.remote_addr
+        # Gets the user's IP address
+        
+        path = request.path
+        # Gets the current request URL path (e.g., '/scan')
+        
+        log_attack(ip, path, user_input, matched_pattern)
+        # Calls the logging function to save details of this attack
+
+        return jsonify({
+            "input": user_input,
+            "status": "SQL Injection Detected",
+            "pattern_matched": matched_pattern
+        }), 403
+        # Returns JSON response with status 403 (Forbidden)
+        # 'jsonify()' converts dictionary to JSON
+        
+    return jsonify({
+        "input": user_input,
+        "status": "Clean"
+    }), 200
+    # If no pattern matched, return clean status with 200 OK
+
+
+# RUNNING THE APP
+
+if __name__ == '__main__':
+    # Python's special built-in condition
+    # Ensures this block runs only when script is run directly (not imported)
+    
+    app.run(debug=True)
+    # Starts the Flask development server
+    # 'debug=True' enables auto-reload and detailed error messages

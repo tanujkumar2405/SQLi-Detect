@@ -1,0 +1,97 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PYTHON LIBRARY: FLASK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Flask is a **lightweight web framework** used to create web applications and APIs.
+
+🔑 Common Flask Components:
+---------------------------
+from flask import Flask
+# Imports the main Flask class to create an app
+
+app = Flask(__name__)
+# Creates a Flask web app instance
+
+@app.route('/')
+# Decorator to define a URL route (e.g., "/")
+
+def home():
+    return "Welcome!"
+# Defines what to show when user visits the route
+
+app.run(debug=True)
+# Starts the Flask server
+# debug=True auto-reloads and shows errors
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PYTHON LIBRARY: FPDF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• FPDF is a **Python library to generate PDF files** (like invoices, reports, etc.)
+
+🔑 Common FPDF Usage:
+---------------------
+from fpdf import FPDF
+# Imports the FPDF class
+
+pdf = FPDF()
+# Creates a new PDF object
+
+pdf.add_page()
+# Adds a blank page to the PDF
+
+pdf.set_font("Arial", size=12)
+# Sets the font for writing text
+
+pdf.cell(200, 10, txt="Hello PDF", ln=1, align='C')
+# Adds a text cell: width=200, height=10, text, new line, centered
+
+pdf.output("output.pdf")
+# Saves the PDF file with this name
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PYTHON LIBRARY: COLORAMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Colorama is used to **add colors to terminal output** (text in red, green, etc.)
+• Works on Windows, Linux, macOS.
+
+🔑 Common Colorama Usage:
+-------------------------
+from colorama import Fore, Style, init
+# Fore: for text color
+# Style: for styles like RESET
+# init(): to initialize colorama
+
+init()
+# Initializes colorama (needed on Windows)
+
+print(Fore.RED + "Error occurred")
+# Prints red text
+
+print(Style.RESET_ALL)
+# Resets color to default
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PYTHON LIBRARY: REQUESTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Requests is used to **send HTTP requests** (GET, POST, etc.) easily in Python.
+
+🔑 Common Requests Usage:
+-------------------------
+import requests
+# Imports the requests module
+
+res = requests.get("http://example.com")
+# Sends a GET request to the URL
+
+print(res.text)
+# Prints the response body (HTML/text)
+
+data = {"username": "admin", "password": "1234"}
+res = requests.post("http://site.com/login", data=data)
+# Sends POST request with form data
+
+if res.status_code == 200:
+    print("Success!")
+# Checks if response was OK (status code 200)

@@ -1,0 +1,75 @@
+# IMPORTING MODULE
+
+import requests
+# 'requests' is a third-party Python module to send HTTP requests (like GET, POST).
+# We use it here to test the web application for SQL Injection inputs.
+
+# SETTING THE TARGET URL
+
+URL = "http://localhost:5000/test"
+# This is the URL where requests will be sent.
+# "localhost" means your own computer.
+# Port 5000 is the default for Flask apps.
+# "/test" is the route (endpoint) that will receive input.
+
+# CREATING A LIST OF TEST INPUTS
+
+test_inputs = [
+    "normalinput",                        # Normal safe input
+    "' OR '1'='1",                        # SQL Injection: always true condition
+    "'; DROP TABLE users;--",            # SQLi: tries to delete a table
+    "admin' --",                         # Bypass login using SQL comment
+    "1 OR 1=1",                          # Another always-true SQL injection
+    "test@example.com",                 # Regular email input
+    "password123",                      # Regular password input
+    "UNION SELECT NULL, NULL, NULL",    # SQLi UNION attack
+    "1' AND 1=1 --",                    # SQLi true condition with comment
+    "Robert'); DROP TABLE Students;--"  # Famous Bobby Tables SQLi joke
+]
+# Each item is a string.
+# Square brackets [] create a list in Python.
+
+
+# FUNCTION TO RUN TESTS
+
+def run_tests():
+    # 'def' defines a new function called run_tests (no input parameters)
+    
+    print(f"Sending {len(test_inputs)} test inputs to {URL}...\n")
+    # f-string: embeds values inside a string using curly braces { }
+    # len(test_inputs): counts how many inputs in the list
+    
+    for i, payload in enumerate(test_inputs, 1):
+        # 'for' loop: runs for each item in test_inputs
+        # 'enumerate' gives both index (i) and value (payload)
+        # '1' means start counting from 1 instead of 0
+        
+        try:
+            # 'try' block: attempts to run the request
+            
+            res = requests.get(URL, params={"input": payload})
+            # Sends a GET request to the URL with a query parameter
+            # Example: http://localhost:5000/test?input=payload
+            # 'res' stores the server's response
+            
+            print(f"[{i}] Sent: {payload}\nResponse: {res.text}\n")
+            # Shows what was sent and what response was received
+            # res.text: gets response body as string
+        
+        except requests.exceptions.RequestException as e:
+            # 'except' catches network errors like connection failure
+            # 'as e' stores the error message in variable 'e'
+            
+            print(f"[{i}] Failed to send: {payload}\nError: {e}\n")
+            # Prints the error if request fails
+
+
+# CHECKING IF SCRIPT IS RUN DIRECTLY
+
+if __name__ == "__main__":
+    # '__name__' is a special variable in Python
+    # It equals '__main__' only if the script is run directly, not imported
+    # This makes sure run_tests() runs only when this file is executed
+    
+    run_tests()
+    # Calls the run_tests function to begin testing

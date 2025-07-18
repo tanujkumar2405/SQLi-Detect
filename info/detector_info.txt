@@ -1,0 +1,84 @@
+
+Filename: detector_info.txt
+
+Line-by-Line Beginner-Friendly Explanation:
+
+1. import sys
+   - 'import' is a Python keyword used to include modules.
+   - 'sys' is a built-in module that provides access to system-specific parameters and functions.
+
+2. from utils import load_patterns, detect_sqli, log_attack
+   - This imports specific functions from a custom module named 'utils'.
+   - 'load_patterns' loads SQL injection patterns.
+   - 'detect_sqli' checks if an input matches SQLi patterns.
+   - 'log_attack' records details about suspicious input.
+
+3. import colorama
+   - Imports the 'colorama' module, which helps color text in the terminal.
+
+4. from colorama import Fore, Style
+   - Imports specific classes from colorama.
+   - 'Fore' is used to change text color.
+   - 'Style' is used to reset or style the text (like bold, reset, etc.).
+
+6. colorama.init(autoreset=True)
+   - Initializes colorama (needed for Windows compatibility).
+   - 'autoreset=True' means colors reset automatically after each print.
+
+8. patterns = load_patterns()
+   - Calls 'load_patterns()' function and stores the result (list of patterns) in 'patterns'.
+
+10. def main():
+    - Defines a new function named 'main'. The main logic goes here.
+
+11. print(f"{Fore.YELLOW}=== SQL Injection Detection Tool ==={Style.RESET_ALL}")
+    - Displays a title in yellow color using f-string (formatted string).
+
+12. print("Type 'exit' to quit.\n")
+    - Shows instruction. '\n' adds a new line.
+
+14. while True:
+    - Starts an infinite loop. Will keep asking for input until user types 'exit'.
+
+15. payload = input("Enter input (simulated payload): ").strip()
+    - Asks the user for input.
+    - '.strip()' removes any leading/trailing whitespace.
+
+16. if payload.lower() == 'exit':
+    - Checks if the input (in lowercase) is 'exit'.
+
+17. print(f"{Fore.YELLOW}Exiting the tool.{Style.RESET_ALL}")
+    - If yes, prints exit message in yellow.
+
+18. break
+    - Stops the loop.
+
+20. ip = "127.0.0.1"
+    - Sets a dummy IP address (localhost).
+
+21. endpoint = "/test"
+    - Sets a dummy endpoint name.
+
+23. matched_pattern = detect_sqli(payload, patterns)
+    - Calls 'detect_sqli' function to check if the input matches SQLi patterns.
+
+24. if matched_pattern:
+    - If SQLi is detected (function returned a pattern):
+
+25. print(f"{Fore.RED}[!] SQL Injection Detected!{Style.RESET_ALL} Pattern matched: {Fore.RED}{matched_pattern}{Style.RESET_ALL}\n")
+    - Displays a red warning message and the matched pattern.
+
+26. log_attack(ip, endpoint, payload, matched_pattern)
+    - Records the suspicious input to a log (e.g., a file or console).
+
+28. else:
+    - If no pattern matched (no SQLi detected):
+
+29. print(f"{Fore.GREEN}[+] Clean input. No SQLi detected.{Style.RESET_ALL}\n")
+    - Shows green success message.
+
+31. if __name__ == "__main__":
+    - Ensures the 'main()' function only runs when the file is executed directly (not when imported).
+
+32. main()
+    - Calls the main function to start the tool.
