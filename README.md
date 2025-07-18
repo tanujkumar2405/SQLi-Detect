@@ -193,6 +193,14 @@ Contributions, improvements, and feature requests are welcome! Please:
 ---
 
 
+## 📂 Info Folder
+
+All function-level and module-level explanations are available inside the [`info/`](./info) directory.
+
+
+---
+
+
 ## 📜 License
 
 This project is licensed under the [MIT License](LICENSE.txt).  
