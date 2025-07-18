@@ -3,7 +3,7 @@
 ![SQLi-Detect](https://img.shields.io/badge/SQLi-Detect-blue?style=for-the-badge&logo=python)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python Version](https://img.shields.io/badge/python-3.6%2B-blue.svg)
-
+  
 ---
 
 ## 🔒 What is SQLi-Detect?
