@@ -1,5 +1,5 @@
 # IMPORTING NECESSARY MODULES
-  
+
 from flask import Flask, request, jsonify
 # 'flask' is a micro web framework used to build web apps/APIs
 # 'Flask' creates the app
